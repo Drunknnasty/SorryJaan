@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Dancing+Script:wght@700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #ffe4f0 0%, #ffd6e8 30%, #ffe8f5 60%, #ffc8e0 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .floating-heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    opacity: 0.4;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: #ff85b3;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 52px;
+    color: #c2185b;
+    text-shadow: 2px 2px 0 #ffb6d3;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .header h1 span {
+    color: #e91e8c;
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: #ad5577;
+    margin-top: 6px;
+  }
+
+  /* TEDDY CARD */
+  .teddy-card {
+    background: white;
+    border-radius: 28px;
+    padding: 30px 24px;
+    margin: 20px 0;
+    box-shadow: 0 8px 32px rgba(255,100,180,0.15);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #ffd0e8;
+  }
+
+  .teddy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #ff85b3, #ff5fa0, #ff85b3);
+  }
+
+  /* SVG TEDDY */
+  .teddy-svg {
+    width: 160px;
+    height: 180px;
+    margin: 0 auto 16px;
+    display: block;
+    animation: teddySad 3s ease-in-out infinite;
+  }
+
+  @keyframes teddySad {
+    0%, 100% { transform: rotate(-3deg) translateY(0); }
+    50% { transform: rotate(3deg) translateY(-5px); }
+  }
+
+  .tear {
+    animation: tearDrop 2s ease-in infinite;
+  }
+
+  @keyframes tearDrop {
+    0% { opacity: 0; transform: translateY(0); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(18px); }
+  }
+
+  .tear2 {
+    animation: tearDrop 2s ease-in 0.7s infinite;
+  }
+
+  .teddy-speech {
+    background: #fff0f7;
+    border: 2px dashed #ffb3d4;
+    border-radius: 20px;
+    padding: 14px 20px;
+    font-size: 16px;
+    color: #c2185b;
+    font-weight: 700;
+    margin: 8px 0 16px;
+    position: relative;
+  }
+
+  .teddy-speech::before {
+    content: '🗨️';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+  }
+
+  /* SORRY SECTION */
+  .sorry-section {
+    background: white;
+    border-radius: 28px;
+    padding: 28px 24px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(255,100,180,0.12);
+    border: 2px solid #ffd0e8;
+  }
+
+  .section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: #e91e8c;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .reason-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .reason-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: #fff5f9;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #7b2d50;
+    font-weight: 600;
+    border-left: 4px solid #ff85b3;
+    animation: slideIn 0.5s ease both;
+  }
+
+  .reason-list li .icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reason-list li:nth-child(1) { animation-delay: 0.1s; }
+  .reason-list li:nth-child(2) { animation-delay: 0.2s; }
+  .reason-list li:nth-child(3) { animation-delay: 0.3s; }
+  .reason-list li:nth-child(4) { animation-delay: 0.4s; }
+  .reason-list li:nth-child(5) { animation-delay: 0.5s; }
+
+  /* LOVE REASONS */
+  .love-card {
+    background: linear-gradient(135deg, #fff0f7, #ffe8f5);
+    border-radius: 28px;
+    padding: 28px 24px;
+    margin: 16px 0;
+    border: 2px solid #ffb3d4;
+    box-shadow: 0 8px 32px rgba(255,100,180,0.12);
+  }
+
+  .love-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .love-item {
+    background: white;
+    border-radius: 18px;
+    padding: 14px 10px;
+    text-align: center;
+    border: 1.5px solid #ffc2db;
+    font-size: 13px;
+    color: #ad1457;
+    font-weight: 700;
+  }
+
+  .love-item .love-icon {
+    font-size: 26px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* PROMISE SECTION */
+  .promise-section {
+    background: white;
+    border-radius: 28px;
+    padding: 28px 24px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(255,100,180,0.12);
+    border: 2px solid #ffd0e8;
+  }
+
+  .promise-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background: #fff5fb;
+    font-size: 14px;
+    font-weight: 700;
+    color: #7b2d50;
+  }
+
+  .promise-check {
+    width: 28px;
+    height: 28px;
+    background: #ff85b3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* POOKIE SECTION */
+  .pookie-section {
+    background: linear-gradient(135deg, #c2185b, #e91e8c);
+    border-radius: 28px;
+    padding: 28px 24px;
+    margin: 16px 0;
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(194,24,91,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pookie-section::before {
+    content: '💕';
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.1;
+    top: -10px;
+    right: -10px;
+  }
+
+  .pookie-section::after {
+    content: '💕';
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.1;
+    bottom: -10px;
+    left: -10px;
+  }
+
+  .pookie-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  }
+
+  .pookie-text {
+    font-size: 15px;
+    line-height: 1.7;
+    opacity: 0.95;
+    font-weight: 600;
+  }
+
+  /* BUTTON */
+  .forgive-btn-wrap {
+    text-align: center;
+    margin: 24px 0;
+  }
+
+  .forgive-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff5fa0, #e91e8c);
+    color: white;
+    border: none;
+    padding: 18px 48px;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(233,30,140,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .forgive-btn:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 12px 32px rgba(233,30,140,0.5);
+  }
+
+  .forgive-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* FORGIVEN STATE */
+  .forgiven-box {
+    display: none;
+    background: white;
+    border-radius: 28px;
+    padding: 32px 24px;
+    margin: 16px 0;
+    text-align: center;
+    border: 3px solid #ff85b3;
+    box-shadow: 0 8px 40px rgba(255,100,180,0.25);
+  }
+
+  .forgiven-box.active {
+    display: block;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .forgiven-emoji {
+    font-size: 60px;
+    display: block;
+    animation: spin 0.6s ease-out 0.2s both;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(-180deg) scale(0); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+
+  .forgiven-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 42px;
+    color: #e91e8c;
+    margin: 12px 0 8px;
+  }
+
+  .forgiven-msg {
+    font-size: 15px;
+    color: #ad5577;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .confetti-row {
+    font-size: 28px;
+    letter-spacing: 4px;
+    margin: 14px 0;
+    animation: bounce 1s ease-in-out infinite;
+  }
+
+  /* STARS */
+  .stars-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0;
+  }
+
+  .star {
+    font-size: 24px;
+    animation: twinkle 1.5s ease-in-out infinite;
+  }
+
+  .star:nth-child(2) { animation-delay: 0.2s; }
+  .star:nth-child(3) { animation-delay: 0.4s; }
+  .star:nth-child(4) { animation-delay: 0.6s; }
+  .star:nth-child(5) { animation-delay: 0.8s; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #c2185b;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+
+  /* SPARKLE */
+  .sparkle-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-size: 20px;
+    margin: 10px 0;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  /* RIBBON */
+  .ribbon {
+    text-align: center;
+    margin: 6px 0 18px;
+    font-size: 22px;
+    letter-spacing: 3px;
+  }
+
+  .pookie-tag {
+    display: inline-block;
+    background: #fff0f7;
+    border: 2px solid #ffb3d4;
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 14px;
+    color: #c2185b;
+    font-weight: 800;
+    margin: 8px 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* HIDE no btn if forgiven */
+  .no-btn-wrap {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .no-btn {
+    background: none;
+    border: 2px dashed #ffb3d4;
+    color: #d48;
+    font-size: 13px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    padding: 8px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .no-btn:hover {
+    background: #fff0f7;
+    transform: scale(1.1) rotate(-3deg);
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div class="hearts-bg" id="heartsContainer"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">💌 A message just for you</div>
+    <h1>For My <span>Tayyaba</span> 🌸</h1>
+    <div class="ribbon">🌹 🌷 🌸 🌺 🌻</div>
+    <p class="header-sub">The most beautiful, most precious person in my whole world 💖</p>
+  </div>
+
+  <!-- TEDDY CARD -->
+  <div class="teddy-card">
+    <!-- SVG Sad Teddy -->
+    <svg class="teddy-svg" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ears -->
+      <circle cx="42" cy="45" r="20" fill="#d4956a"/>
+      <circle cx="118" cy="45" r="20" fill="#d4956a"/>
+      <circle cx="42" cy="45" r="13" fill="#e8b494"/>
+      <circle cx="118" cy="45" r="13" fill="#e8b494"/>
+      <!-- Body -->
+      <ellipse cx="80" cy="130" rx="45" ry="42" fill="#d4956a"/>
+      <!-- Head -->
+      <circle cx="80" cy="72" r="46" fill="#d4956a"/>
+      <!-- Face inner -->
+      <ellipse cx="80" cy="80" rx="30" ry="25" fill="#e8b494"/>
+      <!-- Eyes sad (X shaped / droopy) -->
+      <ellipse cx="63" cy="63" rx="7" ry="9" fill="#5d3a1a"/>
+      <ellipse cx="97" cy="63" rx="7" ry="9" fill="#5d3a1a"/>
+      <!-- Sad eyebrows -->
+      <path d="M55 54 Q63 49 71 54" stroke="#5d3a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M89 54 Q97 49 105 54" stroke="#5d3a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Shine in eyes -->
+      <circle cx="60" cy="60" r="2" fill="white"/>
+      <circle cx="94" cy="60" r="2" fill="white"/>
+      <!-- Nose -->
+      <ellipse cx="80" cy="78" rx="7" ry="5" fill="#8b4513"/>
+      <!-- Sad mouth -->
+      <path d="M68 90 Q80 83 92 90" stroke="#8b4513" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Rosy cheeks -->
+      <ellipse cx="54" cy="80" rx="10" ry="7" fill="#e8748a" opacity="0.4"/>
+      <ellipse cx="106" cy="80" rx="10" ry="7" fill="#e8748a" opacity="0.4"/>
+      <!-- Tear drops -->
+      <g class="tear">
+        <ellipse cx="60" cy="72" rx="3" ry="4" fill="#87CEEB" opacity="0.9"/>
+        <path d="M57 74 Q60 80 63 74" fill="#87CEEB" opacity="0.9"/>
+      </g>
+      <g class="tear2">
+        <ellipse cx="100" cy="72" rx="3" ry="4" fill="#87CEEB" opacity="0.9"/>
+        <path d="M97 74 Q100 80 103 74" fill="#87CEEB" opacity="0.9"/>
+      </g>
+      <!-- Belly -->
+      <ellipse cx="80" cy="128" rx="25" ry="20" fill="#e8b494"/>
+      <!-- Small heart on belly -->
+      <text x="73" y="135" font-size="16">💗</text>
+      <!-- Arms -->
+      <ellipse cx="38" cy="115" rx="12" ry="28" fill="#d4956a" transform="rotate(-20 38 115)"/>
+      <ellipse cx="122" cy="115" rx="12" ry="28" fill="#d4956a" transform="rotate(20 122 115)"/>
+      <!-- Legs -->
+      <ellipse cx="60" cy="165" rx="14" ry="16" fill="#d4956a"/>
+      <ellipse cx="100" cy="165" rx="14" ry="16" fill="#d4956a"/>
+    </svg>
+
+    <div class="teddy-speech">
+      "Tayyaba jaan… please forgive me 🥺 I'm so so sorry…"
+    </div>
+
+    <div class="stars-row">
+      <span class="star">⭐</span>
+      <span class="star">💫</span>
+      <span class="star">✨</span>
+      <span class="star">💫</span>
+      <span class="star">⭐</span>
+    </div>
+
+    <div style="margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;">
+      <span class="pookie-tag">My Pookie 🍬</span>
+      <span class="pookie-tag">My Jaan 💖</span>
+      <span class="pookie-tag">My Everything 🌙</span>
+    </div>
+  </div>
+
+  <!-- SORRY SECTION -->
+  <div class="sorry-section">
+    <div class="section-title">Why I'm Sorry 🥺</div>
+    <ul class="reason-list">
+      <li><span class="icon">💔</span><span>I was wrong and I know it — I should have been smarter, kinder, and more thoughtful. I wasn't, and I truly regret it.</span></li>
+      <li><span class="icon">😢</span><span>You deserve nothing but love, peace, and happiness — and I failed to give you that in that moment. That breaks my heart.</span></li>
+      <li><span class="icon">🙏</span><span>I'm not just saying sorry to make things okay — I mean it from the deepest corner of my heart, Tayyaba.</span></li>
+      <li><span class="icon">🤍</span><span>You are my safe place, my home, my comfort. The thought of you being upset because of me is the worst feeling in the world.</span></li>
+      <li><span class="icon">🌸</span><span>I promise to listen better, love louder, and make sure you always feel like the queen you truly are.</span></li>
+    </ul>
+  </div>
+
+  <!-- LOVE REASONS -->
+  <div class="love-card">
+    <div class="section-title">Why I Love You 💕</div>
+    <div class="love-grid">
+      <div class="love-item"><span class="love-icon">😍</span>Your beautiful smile that lights up my whole world</div>
+      <div class="love-item"><span class="love-icon">🧠</span>How clever and wise you are in everything you do</div>
+      <div class="love-item"><span class="love-icon">🤗</span>The way your hugs feel like home — pure magic</div>
+      <div class="love-item"><span class="love-icon">💪</span>Your strength — you handle everything with grace</div>
+      <div class="love-item"><span class="love-icon">🌙</span>How you make even ordinary days feel special</div>
+      <div class="love-item"><span class="love-icon">😂</span>Your laugh — the best sound I have ever heard</div>
+    </div>
+  </div>
+
+  <!-- PROMISE SECTION -->
+  <div class="promise-section">
+    <div class="section-title">My Promises to You 🤝</div>
+    <div class="promise-item"><div class="promise-check">✓</div><span>I will always choose you — every single day, without hesitation</span></div>
+    <div class="promise-item"><div class="promise-check">✓</div><span>I will listen more and speak less when I should stay quiet</span></div>
+    <div class="promise-item"><div class="promise-check">✓</div><span>I will never let you feel unloved or unappreciated, ever again</span></div>
+    <div class="promise-item"><div class="promise-check">✓</div><span>I will be your biggest fan, your safest shelter, your silliest friend</span></div>
+    <div class="promise-item"><div class="promise-check">✓</div><span>I will keep apologising with full effort until I've earned your smile back 💖</span></div>
+  </div>
+
+  <!-- POOKIE SECTION -->
+  <div class="pookie-section">
+    <div class="pookie-title">To My Pookie Bear 🐻💕</div>
+    <p class="pookie-text">
+      Tayyaba, you are not just my wife — you are my best friend, my safe haven, 
+      my biggest blessing. Life without your smile is not a life I want. 
+      You are my favourite everything — my favourite person, my favourite laugh, 
+      my favourite hug, my favourite hello. 
+      <br><br>
+      Please, my jaan — let your pookie make it right. 
+      I love you more than all the stars, all the roses, and all the words in the world 🌟🌹
+    </p>
+    <div class="sparkle-row" style="margin-top: 18px;">✨ 💕 🌸 💕 ✨</div>
+  </div>
+
+  <!-- FORGIVE BUTTON -->
+  <div class="forgive-btn-wrap">
+    <button class="forgive-btn" onclick="forgiveMe()">
+      💖 I Forgive You, Pookie! 💖
+    </button>
+    <div class="no-btn-wrap">
+      <button class="no-btn" id="noBtn" onclick="noBtnClick()">
+        Not yet... 🥺
+      </button>
+    </div>
+  </div>
+
+  <!-- FORGIVEN STATE -->
+  <div class="forgiven-box" id="forgivenBox">
+    <span class="forgiven-emoji">🎉</span>
+    <div class="forgiven-title">Yaaaay!! 🥳💖</div>
+    <div class="confetti-row">🎊 🌸 💕 🌟 💝 🌺 🎊</div>
+    <p class="forgiven-msg">
+      Tayyaba said YES!! The teddy is SO happy now! 🐻💕<br>
+      <br>
+      You are the most beautiful, most kind, most amazing person 
+      and I am the luckiest person alive to have you. 
+      Thank you for your big heart, my jaan. 
+      I love you more than ever! 
+      <br><br>
+      Now let me give you the biggest hug ever! 🤗💖
+    </p>
+    <div class="sparkle-row" style="font-size: 32px; margin-top: 16px;">
+      💕 🌸 💖 🌸 💕
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Made with all the love in the world for Tayyaba 💌<br>
+    <span style="font-size: 20px;">💗 💗 💗</span>
+  </div>
+
+</div>
+
+<script>
+  // Generate floating hearts
+  const container = document.getElementById('heartsContainer');
+  const emojis = ['💕','💖','🌸','💗','🌷','✨','💝','🌺','💓'];
+  for (let i = 0; i < 22; i++) {
+    const el = document.createElement('span');
+    el.className = 'floating-heart';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.animationDuration = (8 + Math.random() * 10) + 's';
+    el.style.animationDelay = (Math.random() * 10) + 's';
+    el.style.fontSize = (14 + Math.random() * 14) + 'px';
+    container.appendChild(el);
+  }
+
+  let noCount = 0;
+  const noMessages = [
+    "Pleeease?? 🥺🐻",
+    "The teddy is crying more… 😭",
+    "Come on pookie… 💕",
+    "He's getting sadder… 🐻💔",
+    "Okay okay… but I love you so much 🥺"
+  ];
+  const noPositions = [
+    [60, 20], [160, 40], [20, 60], [120, 30], [80, 50]
+  ];
+
+  function noBtnClick() {
+    const btn = document.getElementById('noBtn');
+    const msg = noMessages[Math.min(noCount, noMessages.length - 1)];
+    btn.textContent = msg;
+    const pos = noPositions[Math.min(noCount, noPositions.length - 1)];
+    btn.style.marginLeft = pos[0] + 'px';
+    btn.style.marginTop = pos[1] + 'px';
+    btn.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+    noCount++;
+  }
+
+  function forgiveMe() {
+    const box = document.getElementById('forgivenBox');
+    box.classList.add('active');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Burst hearts
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => {
+        const el = document.createElement('span');
+        el.style.cssText = `position:fixed;font-size:28px;left:${30+Math.random()*40}%;top:${20+Math.random()*40}%;animation:floatUp 2s ease-out both;z-index:999;pointer-events:none`;
+        el.textContent = ['💖','🌸','💕','✨','🎊'][Math.floor(Math.random()*5)];
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2500);
+      }, i * 80);
+    }
+  }
+</script>
+</body>
+</html>
